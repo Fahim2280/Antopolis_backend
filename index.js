@@ -21,7 +21,6 @@ mongoose
 // Define schemas
 const animalSchema = new mongoose.Schema({
   Name: { type: String, required: true },
-  category: { type: String, required: true },
   image: { type: String, required: true },
 });
 
@@ -54,16 +53,16 @@ app.get("/animals", async (req, res) => {
 
 // GET API: Fetch all categories
 app.post("/animals", async (req, res) => {
-  const { Name, category, image } = req.body;
+  const { Name, image } = req.body;
   console.log("Received data:", req.body); // Log received data
 
-  if (!Name || !category || !image) {
+  if (!Name || !image) {
     return res
       .status(400)
-      .json({ error: "Name, category, and image are required" });
+      .json({ error: "Name and image are required" });
   }
 
-  const animal = new Animal({ Name, category, image });
+  const animal = new Animal({ Name, image });
 
   try {
     const savedAnimal = await animal.save();
